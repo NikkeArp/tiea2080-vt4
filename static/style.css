@@ -1,0 +1,10 @@
+ul.errors{
+    list-style: none;
+}
+input {
+    width: 8em;
+    text-align: center;
+}
+tr {
+    height: 55px;
+}
