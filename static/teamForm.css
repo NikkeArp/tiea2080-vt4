@@ -2,6 +2,11 @@ ul {
     margin: 0px;
     list-style: none;
 }
+input {
+    font-size: 15px;
+    border: 1px #d0def5 solid;
+    width: 8em;
+}
 form {
     padding: 15px;
 }
@@ -14,4 +19,15 @@ div.form-field {
 }
 #editing {
     display: flex;
+}
+#sbmt {
+    margin-top: 20px;
+    background: #ffffff;
+    border-radius: 5px;
+    border: 1px #396dc0 solid;
+    color: #396dc0;
+    font-size: 16px;
+    font-weight: bold;
+    height: 2em;
+    width: 6em;
 }
