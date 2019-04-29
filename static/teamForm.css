@@ -1,3 +1,17 @@
 ul {
+    margin: 0px;
     list-style: none;
+}
+form {
+    padding: 15px;
+}
+div.form-field {
+    display: flex;
+    justify-content: space-between;
+}
+.inpt {
+    margin: 3px;
+}
+#editing {
+    display: flex;
 }
