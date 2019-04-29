@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="{% block language %}en{% endblock language %}">
+<head>
+    {%- block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {%- endblock styles %}
+    {%- block scripts %}
+    {%- endblock scripts %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Document{% endblock title %}</title>
+</head>
+<body>
+    {%- block content %}{% endblock content %}
+</body>
+</html>

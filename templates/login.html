@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%- block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='loginForm.css') }}">
+{% endblock styles %}
+{%- block title %}Kirjaudu Sisään{% endblock title %}
+{%- block content %}
+<div id="login" class="form">
+  <form class="login" method="POST" action="/login">
+    <h1>Kirjaudu Sisään</h1>
+    {{ login_form.csrf_token}}
+    <!-- Table for username and password -->
+    <div class="form form-fields">
+      <table>
+        <tr>
+          {{ with_errors(login_form.username) }}
+        </tr>
+        <tr>
+          {{ with_errors(login_form.password) }}
+        </tr>
+      </table>
+      {{ login_form.race }}
+      <!-- Horizontal submit block -->
+      <div class="form form-submit">
+        <input class="submit-btn" type="submit" value="Kirjaudu Sisään">
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+
+{% macro with_errors(field) %}
+            {%- if field.errors %}
+            {%- set css_class = 'has_error'%} 
+            <td><div class="form-field">{{ field.label }}{{ field(class=css_class, **kwargs) }}</div></td>
+            <td><ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul></td>
+            {%- else %}
+            <td><div class="form-field">{{ field.label }}{{ field(class="txt-inpt") }}</div></td>
+            {%- endif %}
+{% endmacro %}

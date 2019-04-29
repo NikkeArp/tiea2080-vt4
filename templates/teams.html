@@ -1,0 +1,22 @@
+{% extends 'logged.html' %}
+{%- block title %}Joukkueet{%- endblock title %}
+
+{%- block content %}
+{{ super() }}
+<ul>
+  {%- for series in race_data %}
+  <li>{{ series['name'] }}
+  <ul>
+    {%- for team in series['teams'] %}
+    <li>{{ team['name'] }}
+    <ul>
+      {%- for member in team['members'] %}
+      <li>{{ member }}</li>
+      {%- endfor %}
+    </ul>
+  </li>
+    {%- endfor %}
+  </ul></li>
+  {%- endfor %}
+</ul>
+{%- endblock content %}
