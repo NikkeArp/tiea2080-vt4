@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {%- block content %}
   <nav>
-    <span>{{ race }}</span>
-    <a href="{{ url_for('edit') }}">{{ team }}</a>
-    <a href="{{ url_for('teams') }}">Joukkueet</a>
-    <a href="{{ url_for('logout') }}">Kirjaudu Ulos</a>
+    <div>
+      <span>{{ race }}</span>
+      <a href="{{ url_for('edit') }}">{{ team }}</a>
+      <a href="{{ url_for('teams') }}">Joukkueet</a>
+    </div>
+    <div class="logout">
+      <a href="{{ url_for('logout') }}">Kirjaudu Ulos</a>
+    </div>
   </nav>
 {%- endblock content %}

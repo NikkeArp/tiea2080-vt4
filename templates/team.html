@@ -29,7 +29,7 @@
   {{ field.label }}{{ field(class=css_class, **kwargs) }}
   <ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
   {%- else %}
-  {{ field.label }}{{ field(class="txt-inpt") }}
+  {{ field.label }}{{ field(class="inpt") }}
   {%- endif %}
 </div>
 {% endmacro %}
