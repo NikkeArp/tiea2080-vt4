@@ -2,6 +2,9 @@ ul {
     margin: 0px;
     list-style: none;
 }
+li > input  {
+    width: auto;
+}
 input {
     font-size: 15px;
     border: 1px #d0def5 solid;
