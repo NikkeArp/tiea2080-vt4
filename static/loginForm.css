@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex
+}
+div.form-field {
+    display: flex;
+    flex-direction: column;
+}
+#login {
+    border: 3px #d87809 solid;
+    padding: 5px;
+}
+div.form-fields {
+    background: #FFFFFF;
+    padding: 15px;
+}
+div.form-fields > * {
+    margin: 5px;
+}
+form.login {
+    background: #a8dbe7;
+    padding: 20px 30px 25px 30px;
+}
+form > h1 {
+    font-size: 28px;
+    margin: 5px;
+}
+.txt-inpt, .has_error {
+    width: 8em;
+}
+div.form-submit {
+    display: flex;
+    justify-content: center;
+}
+label {
+    font-weight: bold
+}
+.submit-btn {
+    border: 1px dotted black;
+    background: #48a2dd;
+    padding: 5px;
+}
+ul {
+    list-style: none;
+}
