@@ -1,0 +1,12 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<h1>{{ race['nimi'] }}</h1>
+
+<ul>
+  {% for serie in series %}
+  <li><a href="./{{ race['nimi'] }}/{{ serie['nimi'] }}">{{ serie['nimi'] }}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

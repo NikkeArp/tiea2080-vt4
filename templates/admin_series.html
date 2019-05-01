@@ -1,0 +1,9 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<ul>
+{% for team in teams %}
+  <li>{{ team['nimi'] }}</li>
+{% endfor %}
+</ul>
+{% endblock content %}
