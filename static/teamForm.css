@@ -8,14 +8,23 @@ li > input  {
 input {
     font-size: 15px;
     border: 1px #d0def5 solid;
-    width: 8em;
+    width: 10em;
 }
 form {
     padding: 15px;
+    width: 30em;
+}
+div.members {
+    display: flex;
+    justify-content: space-between;
 }
 div.form-field {
     display: flex;
     justify-content: space-between;
+}
+div.member-field > .form-field{
+    display: flex;
+    align-items: center;
 }
 .inpt {
     margin: 3px;

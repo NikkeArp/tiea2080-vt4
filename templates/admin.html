@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{%- block content %}
+<nav>
+  <div>
+    <a href=" {{ url_for('admin') }} ">ADMIN</a>
+  </div>
+  <div class="logout">
+    <a href="{{ url_for('logout') }}">Kirjaudu Ulos</a>
+  </div>
+</nav>
+{%- endblock content %}
