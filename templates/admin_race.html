@@ -16,24 +16,25 @@
 <form class="edit" method="POST">
 <h2>Lisää sarja</h2>
 {{ series_form.csrf_token }}
-{{ with_errors(series_form.name) }}
-{{ with_errors(series_form.duration) }}
-{{ with_errors(series_form.distance) }}
-{{ with_errors(series_form.start_t) }}
-{{ with_errors(series_form.stop_t) }}
-<input type="submit" value="Tallenna" id="sbmt">
+<table class="table-form">
+{{ table_with_errors(series_form.name) }}
+{{ table_with_errors(series_form.duration) }}
+{{ table_with_errors(series_form.distance) }}
+{{ table_with_errors(series_form.start_t) }}
+{{ table_with_errors(series_form.stop_t) }}
+</table>
+<input type="submit" value="Tallenna" class="submit">
 </form>
 </div>
 {% endblock content %}
 
-{% macro with_errors(field) %}
-<div class="form-field">
+{%- macro table_with_errors(field) %}
+<tr>
 {%- if field.errors %}
-{%- set css_class = 'has_error'%}
-{{ field.label }}{{ field(class=css_class, **kwargs) }}
-<ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
+<td class="label">{{ field.label }}</td><td class="input">{{ field(class='has_error', **kwargs) }}</td>
+<td><ul class="errors">{% for error in field.errors  %}<li>{{ error|e }}</li>{% endfor %}</ul></td>
 {%- else %}
-{{ field.label }}{{ field(class="inpt") }}
+<td class="label">{{ field.label }}</td><td class="input">{{ field(class='input') }}</td><td></td>
 {%- endif %}
-</div>
-{% endmacro %}
+</tr>
+{%- endmacro %}

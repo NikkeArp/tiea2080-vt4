@@ -16,45 +16,72 @@
 <h2>Muokkaa Sarjaa</h2>
 {{ series_form.csrf_token }}
 <input type="hidden" name="form-name" value="series">
-{{ with_errors(series_form.name) }}
-{{ with_errors(series_form.duration) }}
-{{ with_errors(series_form.distance) }}
-{{ with_errors(series_form.start_t) }}
-{{ with_errors(series_form.stop_t) }}
+<table>
+{{ table_with_errors(series_form.name) }}
+{{ table_with_errors(series_form.duration) }}
+{{ table_with_errors(series_form.distance) }}
+{{ table_with_errors(series_form.start_t) }}
+{{ table_with_errors(series_form.stop_t) }}   
+<tr>
+<td class="submit-row">
+<input type="submit" value="Tallenna" class="submit">
+</td>
+<td class="submit-row">
 <div class="delete">{{ series_form.delete.label }}{{ series_form.delete(Class='boolean') }}</div>
-<input type="submit" value="Tallenna" id="sbmt">
+</td>
+</tr>     
+</table>
 </form>
+
 <form method="POST">
 {{ team_form.csrf_token }}
 <input type="hidden" name="form-name" value="team">
 <h2>Lisää Joukkue</h2>
-{{ with_errors(team_form.name) }}
-<div class="members">
-<label>Jäsenet</label>
-<div>
+<table>
+{{ table_with_errors(team_form.team_name) }}
+<tr><td class="label"><label for="mem1">Jäsenet</label></td></tr>
+<tr>
+<td class="label-members">
+    {{ team_form.mem1.label }}
+    {{ team_form.mem2.label }}
+    {{ team_form.mem3.label }}
+    {{ team_form.mem4.label }}
+    {{ team_form.mem5.label }}
+</td>
+<td class="input members" id='homo'>
 <div class="member-field">{{ with_errors(team_form.mem1) }}</div>
 <div class="member-field">{{ with_errors(team_form.mem2) }}</div>
 <div class="member-field">{{ with_errors(team_form.mem3) }}</div>
 <div class="member-field">{{ with_errors(team_form.mem4) }}</div>
 <div class="member-field">{{ with_errors(team_form.mem5) }}</div>
-</div>
-</div>
-<br />
-{{ with_errors(team_form.password) }}
-{{ with_errors(team_form.pw_again) }}
-<input type="submit" value="Tallenna" id="sbmt">
+</td>
+</tr>
+{{ table_with_errors(team_form.password) }}
+{{ table_with_errors(team_form.pw_again) }}
+</table>
+<input type="submit" value="Tallenna" class="submit">
 </form>
 </div>
 {%- endblock content %}
 
-{% macro with_errors(field) %}
-<div class="form-field">
+
+{%- macro table_with_errors(field) %}
+<tr>
 {%- if field.errors %}
-{%- set css_class = 'has_error'%}
-{{ field.label }}{{ field(class=css_class, **kwargs) }}
+<td class="label">{{ field.label }}</td><td class="input">{{ field(class='has_error', **kwargs) }}</td>
+<td><ul class="errors">{% for error in field.errors  %}<li>{{ error|e }}</li>{% endfor %}</ul></td>
+{%- else %}
+<td class="label">{{ field.label }}</td><td class="input">{{ field(class='input') }}</td><td></td>
+{%- endif %}
+</tr>
+{%- endmacro %}
+
+{% macro with_errors(field) %}
+{%- if field.errors %}
+{{ field(class='has_error', **kwargs) }}
 <ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
 {%- else %}
-{{ field.label }}{{ field(class="inpt") }}
+{{ field(class="input") }}
 {%- endif %}
 </div>
 {% endmacro %}

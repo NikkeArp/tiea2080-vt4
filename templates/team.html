@@ -6,28 +6,43 @@
 {%- block title %}Muokkaa{% endblock title %}
 {% block content %}
 {{ super() }}
-<div id="editing" class="form">
-  <form class="edit" method="POST" action="/edit">
-    {{ form.csrf_token }}
-    <h1>Joukkueen muokkaus</h1>
-    {{ with_errors(form.name) }}
-    {{ with_errors(form.series) }}
-    <div class="members">
-      <label>Jäsenet</label>
-      <div>
-        <div class="member-field">{{ with_errors(form.mem1) }}</div>
-        <div class="member-field">{{ with_errors(form.mem2) }}</div>
-        <div class="member-field">{{ with_errors(form.mem3) }}</div>
-        <div class="member-field">{{ with_errors(form.mem4) }}</div>
-        <div class="member-field">{{ with_errors(form.mem5) }}</div>
-      </div>  
-    </div>
-    <br/>
-    {{ with_errors(form.new_password) }}
-    {{ with_errors(form.new_pw_again) }}
-    <input type="submit" value="Tallenna" id="sbmt">
+
+<div class="form">
+  <form method="POST">
+  {{ form.csrf_token }}
+  <h2>Joukkueen muokkaus</h2>
+  <table>
+  {{ table_with_errors(form.name) }}
+  {{ table_with_errors(form.series) }}
+  <tr><td class="label"><label for="mem1">Jäsenet</label></td></tr>
+  <tr>
+  <td class="label-members">
+  {{ form.mem1.label }}
+  {{ form.mem2.label }}
+  {{ form.mem3.label }}
+  {{ form.mem4.label }}
+  {{ form.mem5.label }}
+  </td>
+  <td class="input members" id='homo'>
+  <div class="member-field">{{ with_errors(form.mem1) }}</div>
+  <div class="member-field">{{ with_errors(form.mem2) }}</div>
+  <div class="member-field">{{ with_errors(form.mem3) }}</div>
+  <div class="member-field">{{ with_errors(form.mem4) }}</div>
+  <div class="member-field">{{ with_errors(form.mem5) }}</div>
+  </td>
+  </tr>
+  {{ table_with_errors(form.new_password) }}
+  {{ table_with_errors(form.new_pw_again) }}
+  <tr>
+  <td class="submit-row">
+  <input type="submit" value="Tallenna" class="submit">
+  </td>
+  <td class="submit-row"></td>
+  </tr>
+  </table>
   </form>
-</div>
+  </div>
+
 <div class="checkpoints">
 <table class="checkpoints">
   <tr><th class="cps">Aika</th><th class="cps">Rasti</th></tr>
@@ -40,14 +55,23 @@
 </div>
 {% endblock content %}
 
+{%- macro table_with_errors(field) %}
+<tr>
+{%- if field.errors %}
+<td class="label">{{ field.label }}</td><td class="input">{{ field(class='has_error', **kwargs) }}</td>
+<td><ul class="errors">{% for error in field.errors  %}<li>{{ error|e }}</li>{% endfor %}</ul></td>
+{%- else %}
+<td class="label">{{ field.label }}</td><td class="input">{{ field(class='input') }}</td><td></td>
+{%- endif %}
+</tr>
+{%- endmacro %}
+
 {% macro with_errors(field) %}
-<div class="form-field">
-  {%- if field.errors %}
-  {%- set css_class = 'has_error'%}
-  {{ field.label }}{{ field(class=css_class, **kwargs) }}
-  <ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
-  {%- else %}
-  {{ field.label }}{{ field(class="inpt") }}
-  {%- endif %}
+{%- if field.errors %}
+{{ field(class='has_error', **kwargs) }}
+<ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
+{%- else %}
+{{ field(class="input") }}
+{%- endif %}
 </div>
 {% endmacro %}

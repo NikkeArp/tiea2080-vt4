@@ -9,11 +9,14 @@ from functools import wraps
 from datetime import datetime
 
 #Flask modules
-from flask import Flask, render_template, url_for, redirect, request, session, g, flash
+from flask import (Flask, render_template, url_for,
+    redirect, request, session, g, flash)
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
-from wtforms import StringField, PasswordField, SelectField, RadioField, DateTimeField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Optional, ValidationError, StopValidation, EqualTo, Length
+from wtforms import (StringField, PasswordField, SelectField, RadioField,
+    DateTimeField, BooleanField, SubmitField, IntegerField)
+from wtforms.validators import (DataRequired, Optional, ValidationError,
+    StopValidation, EqualTo, NumberRange, InputRequired)
 
 #my modules
 from mylogging import logging, log_exc
@@ -302,8 +305,10 @@ def admin_races(race):
 
     class SeriesForm(FlaskForm):
         name = StringField('Nimi', validators=[DataRequired(), validate_name])
-        duration = StringField('Kesto', validators=[DataRequired()])
-        distance = StringField('Matka')
+        duration = IntegerField('Kesto',
+            validators=[InputRequired(), NumberRange(min=1,
+                message=u'Keston on oltava suurenmpi kuin 0')])
+        distance = IntegerField('Matka', validators=[Optional()])
         start_t = DateTimeField('Alkuaika', validators=[Optional()])
         stop_t = DateTimeField('Loppuaika', validators=[Optional()])
 
@@ -347,12 +352,12 @@ def admin_series(race, series):
 
     class TeamForm(FlaskForm):
         """Form for editing users team"""
-        name = StringField(u'Nimi',
+        team_name = StringField(u'Nimi',
             validators=[DataRequired(), validate_name])
         password = PasswordField(u'Salasana',
             validators=[DataRequired()])
         pw_again = PasswordField('Salasana uudelleen',
-            validators=[EqualTo(password, message='Syöttämäsi salasanat eivät täsmää'), DataRequired()])
+            validators=[EqualTo('password', message=u'Syöttämäsi salasanat eivät täsmää'), DataRequired()])
         mem1 = StringField(u'Jäsen 1', validators=[DataRequired()])
         mem2 = StringField(u'Jäsen 2', validators=[DataRequired()])
         mem3 = StringField(u'Jäsen 3', validators=[])
@@ -376,8 +381,8 @@ def admin_series(race, series):
         name = StringField('Nimi',
             validators=[DataRequired(), validate_series_name],
             default=series['nimi'])
-        duration = StringField('Kesto',
-            validators=[DataRequired(), Length(min=1, message=u"Keston on oltava suurempi kuin 0")],
+        duration = IntegerField('Kesto',
+            validators=[DataRequired(), NumberRange(min=1, message=u"Keston on oltava suurempi kuin 0")],
             default=series['kesto'])
         distance = StringField('Matka', default=series['matka'])
         start_t = DateTimeField('Alkuaika',
@@ -401,13 +406,13 @@ def admin_series(race, series):
             (nimi, sarja, salasana, jasenet)
             VALUES (:nimi, :sarja, :salasana, :jasenet)''',
             {
-               'nimi': team_form.name.data,
+               'nimi': team_form.team_name.data,
                'sarja': series['id'],
                'salasana': None,
                'jasenet': gather_members(team_form)
             })
         created_team = query_db('SELECT * FROM joukkueet WHERE nimi=? AND sarja=?',
-            [team_form.name.data, series['id']], one=True)
+            [team_form.team_name.data, series['id']], one=True)
         hasher = hashlib.sha512(unicode(created_team['id']) + team_form.password.data)
         query_db('UPDATE joukkueet SET salasana=? WHERE id=?',
             [hasher.hexdigest(), created_team['id']])
