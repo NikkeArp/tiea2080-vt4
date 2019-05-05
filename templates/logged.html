@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
+{% block nav %}
+<nav>
+  <div>
+    <span>{{ g.race['nimi'] }}</span>
+    <a href="{{ url_for('edit') }}">{{ g.user['nimi'] }}</a>
+    <a href="{{ url_for('teams') }}">Joukkueet</a>
+    <span>TIEA2080 Web-palvelinohjelmointi</span>
+  </div>
+  <div class="logout">
+    <a href="{{ url_for('logout') }}">Kirjaudu Ulos</a>
+  </div>
+</nav>
+{% endblock nav %}
 {%- block content %}
-  <nav>
-    <div>
-      <span>{{ race }}</span>
-      <a href="{{ url_for('edit') }}">{{ team }}</a>
-      <a href="{{ url_for('teams') }}">Joukkueet</a>
-    </div>
-    <div class="logout">
-      <a href="{{ url_for('logout') }}">Kirjaudu Ulos</a>
-    </div>
-  </nav>
 {%- endblock content %}

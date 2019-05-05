@@ -8,6 +8,51 @@ nav {
     color: white;
     background: #1a6dd8;    
 }
+
+ul.flashes {
+    margin: 20px;
+}
+
+li.error {
+    color: #8d0a0ad8;
+    background: #ee1e1e3b;
+}
+
+li.success {
+    color: #668d0ad8;
+    background: #51eb0a46;
+
+}
+
+ul.flashes > li {
+    border-radius: 5px;
+    padding: .5em;
+    font-size: 18px;
+    margin-right: 10%;
+    margin-left: 10%;
+    text-align: center;
+}
+h1, h2, h3 {
+    margin-top: 0px;
+}
+div.content {
+    margin: 20px;
+    display: flex;
+}
+div.content > div {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+table {
+    margin: 20px;
+    border-collapse: collapse;
+}
+table.checkpoints > tbody > tr > td{
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid black;    
+}
 div.logout {
     margin-left: auto
 }
@@ -17,8 +62,29 @@ nav > div > a {
     color: inherit;
     text-decoration: none;
 }
-
-nav > div > span {
+span.header {
+    font-weight: normal;
+}
+a > span {
     margin-right: 10px;
     font-weight: bold;
+}
+
+.cp-name, .cp-time{
+    padding: .5em;
+    margin: .5em;
+}
+th.cps {
+    background: #e0a932;
+    padding: .5em;
+}
+
+table.checkpoints > tbody > tr > * {
+    box-shadow: 2px 1px 2px black;
+}
+
+table.checkpoints {
+    border-spacing: 10px;
+    border-collapse: unset;
+    border: 1px solid black;
 }

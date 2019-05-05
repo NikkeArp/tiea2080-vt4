@@ -1,12 +1,39 @@
-{% extends 'admin.html' %}
-
-{% block content %}
-<h1>{{ race['nimi'] }}</h1>
-
+{%- extends 'admin.html' %}
+{%- block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+{%- endblock styles %}
+{%- block content %}
+<div>
+<h2>{{ race['nimi'] }}</h2>
 <ul>
-  {% for serie in series %}
-  <li><a href="./{{ race['nimi'] }}/{{ serie['nimi'] }}">{{ serie['nimi'] }}</a></li>
-  {% endfor %}
+{%- for serie in series %}
+<li><a href="./{{ race['nimi'] }}/{{ serie['nimi'] }}">{{ serie['nimi'] }}</a></li>
+{%- endfor %}
 </ul>
-
+</div>
+<div>
+<form class="edit" method="POST">
+<h2>Lisää sarja</h2>
+{{ series_form.csrf_token }}
+{{ with_errors(series_form.name) }}
+{{ with_errors(series_form.duration) }}
+{{ with_errors(series_form.distance) }}
+{{ with_errors(series_form.start_t) }}
+{{ with_errors(series_form.stop_t) }}
+<input type="submit" value="Tallenna" id="sbmt">
+</form>
+</div>
 {% endblock content %}
+
+{% macro with_errors(field) %}
+<div class="form-field">
+{%- if field.errors %}
+{%- set css_class = 'has_error'%}
+{{ field.label }}{{ field(class=css_class, **kwargs) }}
+<ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
+{%- else %}
+{{ field.label }}{{ field(class="inpt") }}
+{%- endif %}
+</div>
+{% endmacro %}

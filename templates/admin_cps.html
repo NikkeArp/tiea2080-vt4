@@ -1,0 +1,21 @@
+{% extends 'admin.html' %}
+{%- block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+{%- endblock styles %}
+{% block content %}
+<table class="checkpoints">
+  <tr><th>KOODI</th><th>LON</th><th>LAT</th><th>KILPAILU</th><th>LEIMAISUT</th></tr>
+  {% for cp in cps %}
+    <tr>
+      <td>{{ cp['koodi'] }}</td>
+      <td>{{ cp['lon'] }}</td>
+      <td>{{ cp['lat'] }}</td>
+      <td>{{ cp['kilpailu'] }}</td>
+      <td>{{ cp['freq'] }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+
+{% endblock content %}

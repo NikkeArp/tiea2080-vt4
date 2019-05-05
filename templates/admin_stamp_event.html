@@ -1,0 +1,28 @@
+{% extends 'admin.html' %}
+{%- block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+{%- endblock styles %}
+{% block content %}
+<div>
+  <form method="POST">
+    {{ form.csrf_token }}
+    {{ with_errors(form.e_time) }}
+    {{ with_errors(form.check_p) }}
+    <div class="delete">{{ form.delete.label }}{{ form.delete(Class='boolean') }}</div>
+    <input  id="sbmt" type="submit" value="Tallenna">
+  </form>
+</div>
+{% endblock content %}
+
+{% macro with_errors(field) %}
+<div class="form-field">
+  {%- if field.errors %}
+  {%- set css_class = 'has_error'%}
+  {{ field.label }}{{ field(class=css_class, **kwargs) }}
+  <ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
+  {%- else %}
+  {{ field.label }}{{ field(class="inpt") }}
+  {%- endif %}
+</div>
+{% endmacro %}

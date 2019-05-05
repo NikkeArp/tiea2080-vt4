@@ -1,11 +1,24 @@
 {% extends 'base.html' %}
-{%- block content %}
+{% block title %}Admin{% endblock title %}
+{%- block nav %}
 <nav>
   <div>
-    <a href=" {{ url_for('admin') }} ">ADMIN</a>
+    <a href=" {{ url_for('admin') }} "><span>ADMIN</span></a>
+    <a href="{{ url_for('admin') }}">Pääsivu</a>
+    <a href="{{ url_for('admin_checkpoints') }}">Rastilistaus</a>
+    <span class="header">TIEA2080 Web-Palvelinohjelmointi</span>
   </div>
   <div class="logout">
     <a href="{{ url_for('logout') }}">Kirjaudu Ulos</a>
   </div>
 </nav>
+{%- endblock nav %}
+{%- block content %}
+
+<ul>
+  {%- for race_name in races %}
+    <li> <a href="/admin/{{ race_name }}">{{ race_name }}</a> </li>
+  {%- endfor %}  
+</ul>
+
 {%- endblock content %}

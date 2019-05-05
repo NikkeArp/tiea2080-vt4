@@ -6,10 +6,6 @@ div.form-field {
     display: flex;
     flex-direction: column;
 }
-#login {
-    border: 3px #d87809 solid;
-    padding: 5px;
-}
 div.form-fields {
     background: #FFFFFF;
     padding: 15px;

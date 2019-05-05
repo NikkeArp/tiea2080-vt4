@@ -1,24 +1,42 @@
 {% extends 'logged.html' %}
 {%- block styles %}
   {{ super() }}
-  <link rel="stylesheet" href="{{ url_for('static', filename='teamForm.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
 {%-  endblock styles %}
 {%- block title %}Muokkaa{% endblock title %}
 {% block content %}
 {{ super() }}
 <div id="editing" class="form">
-  <form class="edit" method="POST" action="/login">
-    {{ team_form.csrf_token }}
+  <form class="edit" method="POST" action="/edit">
+    {{ form.csrf_token }}
     <h1>Joukkueen muokkaus</h1>
-    {{ with_errors(team_form.name) }}
-    {{ with_errors(team_form.series) }}
-    {{ with_errors(team_form.mem1) }}
-    {{ with_errors(team_form.mem2) }}
-    {{ with_errors(team_form.mem3) }}
-    {{ with_errors(team_form.mem4) }}
-    {{ with_errors(team_form.mem5) }}
+    {{ with_errors(form.name) }}
+    {{ with_errors(form.series) }}
+    <div class="members">
+      <label>Jäsenet</label>
+      <div>
+        <div class="member-field">{{ with_errors(form.mem1) }}</div>
+        <div class="member-field">{{ with_errors(form.mem2) }}</div>
+        <div class="member-field">{{ with_errors(form.mem3) }}</div>
+        <div class="member-field">{{ with_errors(form.mem4) }}</div>
+        <div class="member-field">{{ with_errors(form.mem5) }}</div>
+      </div>  
+    </div>
+    <br/>
+    {{ with_errors(form.new_password) }}
+    {{ with_errors(form.new_pw_again) }}
     <input type="submit" value="Tallenna" id="sbmt">
   </form>
+</div>
+<div class="checkpoints">
+<table class="checkpoints">
+  <tr><th class="cps">Aika</th><th class="cps">Rasti</th></tr>
+  {% for cp in cps %}
+  <tr>
+    <td class="cp-time">{{ cp['time'] }}</td><td class="cp-name">{{ cp['name'] }}</td>
+  </tr>
+  {% endfor %}
+</table>
 </div>
 {% endblock content %}
 
