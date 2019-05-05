@@ -13,11 +13,10 @@ from flask import Flask, render_template, url_for, redirect, request, session, g
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, PasswordField, SelectField, RadioField, DateTimeField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Optional, ValidationError, StopValidation, EqualTo
+from wtforms.validators import DataRequired, Optional, ValidationError, StopValidation, EqualTo, Length
 
 #my modules
 from mylogging import logging, log_exc
-from validators import validate_duration
 
 #-------------------Application config------------------#
 app = Flask(__name__)
@@ -378,7 +377,7 @@ def admin_series(race, series):
             validators=[DataRequired(), validate_series_name],
             default=series['nimi'])
         duration = StringField('Kesto',
-            validators=[DataRequired(), validate_duration],
+            validators=[DataRequired(), Length(min=1, message=u"Keston on oltava suurempi kuin 0")],
             default=series['kesto'])
         distance = StringField('Matka', default=series['matka'])
         start_t = DateTimeField('Alkuaika',
